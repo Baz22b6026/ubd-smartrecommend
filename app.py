@@ -732,20 +732,13 @@ def analytics():
     )
 
 
-if __name__ == "__main__":
-    init_db()
-    ensure_item_columns()
-    seed_users_and_profiles()
-    seed_items_from_csv()
-    seed_ratings()
-    app.run(debug=True)
-
-
+# Initialize database and seed data
 init_db()
 ensure_item_columns()
 seed_users_and_profiles()
 seed_items_from_csv()
 seed_ratings()
 
+# Run app locally
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Login - UBD SmartRecommend{% endblock %}
+
+{% block content %}
+<div class="login-shell">
+  <div class="panel panel-hero">
+    <div class="eyebrow">WELCOME</div>
+    <h1>Sign in to SmartRecommend</h1>
+    <p>
+      A recommendation system for UBD students and staff using profile-based matching,
+      interaction history, and synthetic module data.
+    </p>
+    <div class="demo-box">
+      <strong>Demo accounts</strong><br>
+      alice / 1234<br>
+      brian / 1234<br>
+      charlie / 1234<br>
+      staff1 / 1234
+    </div>
+  </div>
+
+  <div class="panel panel-form">
+    <h2>Login</h2>
+    <form method="post">
+      <label>Username</label>
+      <input type="text" name="username" required>
+
+      <label>Password</label>
+      <input type="password" name="password" required>
+
+      <button type="submit" class="btn-primary w-full">Sign In</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

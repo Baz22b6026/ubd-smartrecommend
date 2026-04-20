@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - UBD SmartRecommend{% endblock %}
+
+{% block content %}
+<section class="hero-card">
+  <div class="eyebrow">DASHBOARD</div>
+  <h1>Welcome back, {{ user['full_name'].split()[0] }}</h1>
+  <p>
+    Recommendations are recalculated each time your profile or ratings change, with
+    weighting for study level, faculty alignment, topic overlap and similar-user behaviour.
+  </p>
+
+  <div class="tag-row">
+    <span class="chip">{{ profile['faculty'] }}</span>
+    <span class="chip">{{ profile['study_level'] }}</span>
+    {% for category in profile['preferred_categories'].split(',') %}
+      {% if category.strip() %}
+        <span class="chip chip-soft">{{ category.strip() }}</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-number">{{ recommendations|length }}</div>
+    <div class="stat-label">Recommended for you</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">{{ interaction_count }}</div>
+    <div class="stat-label">Ratings on record</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">1000</div>
+    <div class="stat-label">Modules in dataset</div>
+  </div>
+</section>
+
+<section class="section-heading">
+  <h2>Recommended for you</h2>
+  <p>Update your profile to refine the ranking.</p>
+</section>
+
+<section class="recommendation-grid">
+  {% for item in recommendations %}
+  <article class="module-card">
+    <div class="module-top">
+      <span class="chip chip-soft">{{ item['category'] }}</span>
+      <span class="module-code">{{ item['module_code'] }}</span>
+    </div>
+
+    <h3>{{ item['title'] }}</h3>
+    <p class="module-description">{{ item['description'] }}</p>
+
+    <div class="why-box">
+      <strong>Why:</strong>
+      {% if item['reasons'] %}
+        {{ item['reasons'][0] }}
+      {% else %}
+        Recommended based on your profile.
+      {% endif %}
+    </div>
+
+    <div class="module-footer">
+      <div>
+        <div class="footer-label">Match score</div>
+        <div class="footer-score">{{ item['score'] }}</div>
+      </div>
+      <div class="module-meta">
+        {{ item['semester'] }} · {{ item['credits'] }} credits
+      </div>
+      <a class="details-link" href="{{ url_for('item_detail', item_id=item['id']) }}">View details ↗</a>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

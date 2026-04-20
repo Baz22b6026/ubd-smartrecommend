@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ item['title'] }} - UBD SmartRecommend{% endblock %}
+
+{% block content %}
+<section class="hero-card">
+  <div class="tag-row">
+    <span class="chip">{{ item['module_code'] }}</span>
+    <span class="chip chip-soft">{{ item['category'] }}</span>
+    <span class="chip chip-soft">{{ item['faculty_tag'] }}</span>
+    <span class="chip chip-soft">{{ item['level_tag'] }}</span>
+  </div>
+  <h1>{{ item['title'] }}</h1>
+  <p>{{ item['description'] }}</p>
+  <p class="muted-line"><strong>Topic tags:</strong> {{ item['topic_tags'] }}</p>
+  <p class="muted-line"><strong>Credits:</strong> {{ item['credits'] }} | <strong>Semester:</strong> {{ item['semester'] }}</p>
+</section>
+
+<section class="panel narrow-panel">
+  <h2>Rate this module</h2>
+  <p class="subtext">Your rating contributes to future recommendation updates.</p>
+
+  <form method="post">
+    <label>Select Rating (1 to 5)</label>
+    <select name="rating" required>
+      <option value="">Choose a rating</option>
+      {% for value in [1, 2, 3, 4, 5] %}
+        <option value="{{ value }}" {% if current_rating == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <div class="button-row">
+      <button class="btn-primary" type="submit">Save Rating</button>
+      <a class="btn-secondary-link" href="{{ url_for('dashboard') }}">Back</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

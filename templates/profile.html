@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Profile - UBD SmartRecommend{% endblock %}
+
+{% block content %}
+<section class="hero-card">
+  <div class="eyebrow">PROFILE</div>
+  <h1>Update your profile</h1>
+  <p>
+    Changing your faculty, study level and interests will visibly affect the recommendation output.
+  </p>
+</section>
+
+<section class="panel">
+  <form method="post" class="profile-form">
+    <label>Faculty / Department</label>
+    <select name="faculty" required>
+      {% set current_faculty = existing['faculty'] if existing else '' %}
+      <option value="">Choose faculty</option>
+      <option value="School of Digital Science" {% if current_faculty == 'School of Digital Science' %}selected{% endif %}>School of Digital Science</option>
+      <option value="Faculty of Arts and Social Sciences" {% if current_faculty == 'Faculty of Arts and Social Sciences' %}selected{% endif %}>Faculty of Arts and Social Sciences</option>
+      <option value="Faculty of Science" {% if current_faculty == 'Faculty of Science' %}selected{% endif %}>Faculty of Science</option>
+      <option value="School of Business and Economics" {% if current_faculty == 'School of Business and Economics' %}selected{% endif %}>School of Business and Economics</option>
+      <option value="Career Centre" {% if current_faculty == 'Career Centre' %}selected{% endif %}>Career Centre</option>
+    </select>
+
+    <label>Study Level</label>
+    <select name="study_level" required>
+      {% set current_level = existing['study_level'] if existing else '' %}
+      <option value="">Choose study level</option>
+      <option value="Undergraduate" {% if current_level == 'Undergraduate' %}selected{% endif %}>Undergraduate</option>
+      <option value="Postgraduate" {% if current_level == 'Postgraduate' %}selected{% endif %}>Postgraduate</option>
+      <option value="Final Year Students" {% if current_level == 'Final Year Students' %}selected{% endif %}>Final Year Students</option>
+      <option value="Senior Students" {% if current_level == 'Senior Students' %}selected{% endif %}>Senior Students</option>
+      <option value="Staff" {% if current_level == 'Staff' %}selected{% endif %}>Staff</option>
+    </select>
+
+    <label>Preferred Categories</label>
+    <div class="checkbox-list">
+      <label><input type="checkbox" name="preferred_categories" value="Academic" {% if 'academic' in existing_categories %}checked{% endif %}> Academic</label>
+      <label><input type="checkbox" name="preferred_categories" value="Career" {% if 'career' in existing_categories %}checked{% endif %}> Career</label>
+      <label><input type="checkbox" name="preferred_categories" value="Campus Service" {% if 'campus service' in existing_categories %}checked{% endif %}> Campus Service</label>
+      <label><input type="checkbox" name="preferred_categories" value="Student Activity" {% if 'student activity' in existing_categories %}checked{% endif %}> Student Activity</label>
+    </div>
+
+    <label>Preferred Topics / Interests</label>
+    <input type="text" name="preferred_topics" value="{{ existing['preferred_topics'] if existing else '' }}" required>
+
+    <label>Career Interest</label>
+    <input type="text" name="career_interest" value="{{ existing['career_interest'] if existing else '' }}" required>
+
+    <button class="btn-primary" type="submit">Save Profile</button>
+  </form>
+</section>
+{% endblock %}

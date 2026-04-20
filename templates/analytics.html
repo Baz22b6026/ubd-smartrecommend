@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Analytics - UBD SmartRecommend{% endblock %}
+
+{% block content %}
+<section class="hero-card">
+  <div class="eyebrow">ANALYTICS</div>
+  <h1>Usage and dataset summary</h1>
+  <p>
+    This page shows interaction activity, module ratings, dataset distribution and stored user preferences.
+  </p>
+</section>
+
+<section class="analytics-grid">
+  <div class="panel">
+    <h3>Most Interacted Modules</h3>
+    <ul class="clean-list">
+      {% for row in popular_rows %}
+      <li>{{ row['module_code'] }} — {{ row['title'] }} — {{ row['interaction_count'] }} interactions</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h3>Highest Rated Modules</h3>
+    <ul class="clean-list">
+      {% for row in rating_rows %}
+      <li>{{ row['module_code'] }} — {{ row['title'] }} — {{ row['avg_rating'] if row['avg_rating'] is not none else 'No ratings yet' }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="panel">
+  <h3>Dataset Distribution by Module Level</h3>
+  <ul class="clean-list">
+    {% for row in level_rows %}
+    <li>Level {{ row['module_level_number'] }}: {{ row['cnt'] }} modules</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="panel">
+  <h3>User Preference Summary</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Faculty</th>
+          <th>Study Level</th>
+          <th>Preferred Categories</th>
+          <th>Topics</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in profile_rows %}
+        <tr>
+          <td>{{ row['full_name'] }}</td>
+          <td>{{ row['faculty'] or '-' }}</td>
+          <td>{{ row['study_level'] or '-' }}</td>
+          <td>{{ row['preferred_categories'] or '-' }}</td>
+          <td>{{ row['preferred_topics'] or '-' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
